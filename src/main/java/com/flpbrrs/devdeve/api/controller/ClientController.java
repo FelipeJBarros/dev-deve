@@ -1,5 +1,6 @@
 package com.flpbrrs.devdeve.api.controller;
 
+import com.flpbrrs.devdeve.domain.exceptions.DomainException;
 import com.flpbrrs.devdeve.domain.models.Client;
 import com.flpbrrs.devdeve.domain.repositories.ClientRepository;
 import com.flpbrrs.devdeve.domain.services.ClientServices;
@@ -49,5 +50,10 @@ public class ClientController {
         if (!userExists) return ResponseEntity.notFound().build();
         clientServices.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @ExceptionHandler(DomainException.class)
+    public ResponseEntity<String> handleDomainExceptions(DomainException ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
     }
 }
