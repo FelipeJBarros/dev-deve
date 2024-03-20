@@ -1,4 +1,4 @@
-package com.flpbrrs.devdeve.domain.model;
+package com.flpbrrs.devdeve.domain.models;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -9,6 +9,8 @@ import java.util.UUID;
 @Table(name="clients")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class Client {
     @Id
