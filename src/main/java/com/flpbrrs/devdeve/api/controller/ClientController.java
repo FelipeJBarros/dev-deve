@@ -2,6 +2,7 @@ package com.flpbrrs.devdeve.api.controller;
 
 import com.flpbrrs.devdeve.domain.models.Client;
 import com.flpbrrs.devdeve.domain.repositories.ClientRepository;
+import com.flpbrrs.devdeve.domain.services.ClientServices;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class ClientController {
     private final ClientRepository clientRepository;
+    private final ClientServices clientServices;
     @GetMapping
     public List<Client> list() {
         return clientRepository.findAll();
@@ -29,7 +31,7 @@ public class ClientController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Client create(@Valid @RequestBody Client data) {
-        return clientRepository.save(data);
+        return clientServices.save(data);
     }
     @PutMapping("/{id}")
     public ResponseEntity<Client> update(@PathVariable UUID id, @Valid @RequestBody Client client) {
@@ -37,7 +39,7 @@ public class ClientController {
         if (!userExists) return ResponseEntity.notFound().build();
 
         client.setId(id);
-        client = clientRepository.save(client);
+        client = clientServices.save(client);
 
         return ResponseEntity.ok(client);
     }
@@ -45,7 +47,7 @@ public class ClientController {
     public ResponseEntity<Void> delete(@PathVariable UUID id) {
         boolean userExists = clientRepository.existsById(id);
         if (!userExists) return ResponseEntity.notFound().build();
-        clientRepository.deleteById(id);
+        clientServices.delete(id);
         return ResponseEntity.noContent().build();
     }
 }
