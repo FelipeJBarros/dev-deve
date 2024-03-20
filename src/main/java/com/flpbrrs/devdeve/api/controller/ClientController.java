@@ -30,4 +30,14 @@ public class ClientController {
     public Client create(@RequestBody Client data) {
         return clientRepository.save(data);
     }
+    @PutMapping("/{id}")
+    public ResponseEntity<Client> update(@PathVariable UUID id, @RequestBody Client client) {
+        boolean userExists = clientRepository.existsById(id);
+        if (!userExists) return ResponseEntity.notFound().build();
+
+        client.setId(id);
+        client = clientRepository.save(client);
+
+        return ResponseEntity.ok(client);
+    }
 }

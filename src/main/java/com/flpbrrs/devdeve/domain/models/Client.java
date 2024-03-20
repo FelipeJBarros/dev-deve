@@ -9,6 +9,7 @@ import java.util.UUID;
 @Table(name="clients")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
