@@ -2,6 +2,7 @@ package com.flpbrrs.devdeve.api.controller;
 
 import com.flpbrrs.devdeve.domain.models.Client;
 import com.flpbrrs.devdeve.domain.repositories.ClientRepository;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,11 +28,11 @@ public class ClientController {
     }
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Client create(@RequestBody Client data) {
+    public Client create(@Valid @RequestBody Client data) {
         return clientRepository.save(data);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Client> update(@PathVariable UUID id, @RequestBody Client client) {
+    public ResponseEntity<Client> update(@PathVariable UUID id, @Valid @RequestBody Client client) {
         boolean userExists = clientRepository.existsById(id);
         if (!userExists) return ResponseEntity.notFound().build();
 
