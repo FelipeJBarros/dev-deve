@@ -40,4 +40,11 @@ public class ClientController {
 
         return ResponseEntity.ok(client);
     }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+        boolean userExists = clientRepository.existsById(id);
+        if (!userExists) return ResponseEntity.notFound().build();
+        clientRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
 }
