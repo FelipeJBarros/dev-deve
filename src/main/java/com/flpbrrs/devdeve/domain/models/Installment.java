@@ -22,8 +22,7 @@ public class Installment {
     @EqualsAndHashCode.Include
     private UUID id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "client_id", referencedColumnName = "id", nullable = false)
+    @ManyToOne
     private Client client;
 
     @Column(name = "total_amount", nullable = false)
