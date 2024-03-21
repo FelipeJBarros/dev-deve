@@ -1,7 +1,15 @@
 package com.flpbrrs.devdeve.domain.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.flpbrrs.devdeve.domain.validations.ValidationGroups;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
+import jakarta.validation.groups.ConvertGroup;
+import jakarta.validation.groups.Default;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -24,12 +32,18 @@ public class Installment {
     @EqualsAndHashCode.Include
     private UUID id;
 
+    @Valid
+    @ConvertGroup(from = Default.class, to = ValidationGroups.ClientID.class)
+    @NotNull
     @ManyToOne
     private Client client;
 
+    @NotNull
+    @Positive
     @Column(name = "total_amount", nullable = false)
     private BigDecimal totalAmount;
 
+    @NotBlank
     @Column(name = "job_description", nullable = false)
     private String jobDescription;
 

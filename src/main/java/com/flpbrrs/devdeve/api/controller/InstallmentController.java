@@ -3,6 +3,7 @@ package com.flpbrrs.devdeve.api.controller;
 import com.flpbrrs.devdeve.domain.models.Installment;
 import com.flpbrrs.devdeve.domain.repositories.InstallmentRepository;
 import com.flpbrrs.devdeve.domain.services.InstallmentServices;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +33,7 @@ public class InstallmentController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Installment create(@RequestBody Installment installment) {
+    public Installment create(@Valid @RequestBody Installment installment) {
         return installmentServices.save(installment);
     }
 }
