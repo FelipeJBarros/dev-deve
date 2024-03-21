@@ -1,6 +1,5 @@
 package com.flpbrrs.devdeve.api.controller;
 
-import com.flpbrrs.devdeve.domain.exceptions.DomainException;
 import com.flpbrrs.devdeve.domain.models.Client;
 import com.flpbrrs.devdeve.domain.repositories.ClientRepository;
 import com.flpbrrs.devdeve.domain.services.ClientServices;

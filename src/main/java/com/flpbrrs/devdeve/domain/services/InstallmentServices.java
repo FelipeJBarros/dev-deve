@@ -26,7 +26,7 @@ public class InstallmentServices {
         Client client = clientServices.find(installment.getClient().getId());
 
         installment.setClient(client);
-        installment.setParcels(new ArrayList<Parcel>());
+        installment.setParcels(new ArrayList<>());
 
         return installmentRepository.save(installment);
     }
