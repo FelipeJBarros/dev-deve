@@ -51,9 +51,4 @@ public class ClientController {
         clientServices.delete(id);
         return ResponseEntity.noContent().build();
     }
-
-    @ExceptionHandler(DomainException.class)
-    public ResponseEntity<String> handleDomainExceptions(DomainException ex) {
-        return ResponseEntity.badRequest().body(ex.getMessage());
-    }
 }
