@@ -5,10 +5,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.ProblemDetail;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -18,6 +15,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import java.net.URI;
 import java.util.stream.Collectors;
+
+// using RFC 7807 - Problem details for HTTP APIs
 
 @RestControllerAdvice
 @AllArgsConstructor
@@ -47,7 +46,10 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(DomainException.class)
-    public ResponseEntity<String> handleDomainExceptions(DomainException ex) {
-        return ResponseEntity.badRequest().body(ex.getMessage());
+    public ProblemDetail handleDomainExceptions(DomainException ex) {
+        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+        problemDetail.setTitle(ex.getMessage());
+        problemDetail.setType(URI.create("https://flpbrrs.com/errors/domain-errors"));
+        return problemDetail;
     }
 }
