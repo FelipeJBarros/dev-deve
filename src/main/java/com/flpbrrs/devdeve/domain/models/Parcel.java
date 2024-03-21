@@ -1,5 +1,6 @@
 package com.flpbrrs.devdeve.domain.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,6 +23,7 @@ public class Parcel {
     private UUID id;
 
     @ManyToOne
+    @JsonIgnoreProperties(value = { "parcels" ,"hibernateLazyInitializer", "handler" }, allowSetters = true)
     private Installment installment;
 
     @Column(nullable = false)
