@@ -14,6 +14,11 @@ import java.util.UUID;
 public class ClientServices {
     private final ClientRepository clientRepository;
 
+    public Client find(UUID clientId) {
+        return clientRepository.findById(clientId)
+                .orElseThrow(() -> new DomainException("Client not found"));
+    }
+
     @Transactional
     public Client save(Client client) {
         boolean emailAlreadyExists = clientRepository
