@@ -3,7 +3,6 @@ package com.flpbrrs.devdeve.domain.services;
 import com.flpbrrs.devdeve.domain.exceptions.DomainException;
 import com.flpbrrs.devdeve.domain.models.Client;
 import com.flpbrrs.devdeve.domain.models.Installment;
-import com.flpbrrs.devdeve.domain.models.Parcel;
 import com.flpbrrs.devdeve.domain.repositories.InstallmentRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
