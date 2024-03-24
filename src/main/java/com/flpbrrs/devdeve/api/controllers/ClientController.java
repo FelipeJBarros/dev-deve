@@ -1,5 +1,7 @@
 package com.flpbrrs.devdeve.api.controllers;
 
+import com.flpbrrs.devdeve.api.models.ClientOutput;
+import com.flpbrrs.devdeve.api.models.inputs.ClientInput;
 import com.flpbrrs.devdeve.domain.models.Client;
 import com.flpbrrs.devdeve.domain.repositories.ClientRepository;
 import com.flpbrrs.devdeve.domain.services.ClientServices;
@@ -20,8 +22,9 @@ public class ClientController {
     private final ClientRepository clientRepository;
     private final ClientServices clientServices;
     @GetMapping
-    public List<Client> list() {
-        return clientRepository.findAll();
+    public List<ClientOutput> list() {
+        List<Client> clients = clientRepository.findAll();
+        return ClientOutput.toCollectionModel(clients);
     }
     @GetMapping("/{id}")
     public ResponseEntity<Client> getById(@PathVariable UUID id) {
@@ -30,18 +33,20 @@ public class ClientController {
     }
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Client create(@Valid @RequestBody Client data) {
-        return clientServices.save(data);
+    public ClientOutput create(@Valid @RequestBody ClientInput data) {
+        Client newClient = clientServices.save(ClientInput.toEntity(data));
+        return ClientOutput.toModel(newClient);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Client> update(@PathVariable UUID id, @Valid @RequestBody Client client) {
+    public ResponseEntity<ClientOutput> update(@PathVariable UUID id, @Valid @RequestBody ClientInput clientData) {
         boolean userExists = clientRepository.existsById(id);
         if (!userExists) return ResponseEntity.notFound().build();
 
+        Client client = ClientInput.toEntity(clientData);
         client.setId(id);
         client = clientServices.save(client);
 
-        return ResponseEntity.ok(client);
+        return ResponseEntity.ok(ClientOutput.toModel(client));
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable UUID id) {
