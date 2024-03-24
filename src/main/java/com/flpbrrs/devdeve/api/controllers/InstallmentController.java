@@ -1,5 +1,6 @@
-package com.flpbrrs.devdeve.api.controller;
+package com.flpbrrs.devdeve.api.controllers;
 
+import com.flpbrrs.devdeve.api.models.InstallmentOutput;
 import com.flpbrrs.devdeve.domain.models.Installment;
 import com.flpbrrs.devdeve.domain.repositories.InstallmentRepository;
 import com.flpbrrs.devdeve.domain.services.InstallmentServices;
@@ -19,21 +20,22 @@ public class InstallmentController {
     private final InstallmentRepository installmentRepository;
     private final InstallmentServices installmentServices;
     @GetMapping
-    public List<Installment> list() {
-        return installmentRepository.findAll();
+    public List<InstallmentOutput> list() {
+        return InstallmentOutput.toCollectionModel(installmentRepository.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Installment> getById(@PathVariable UUID id) {
+    public ResponseEntity<InstallmentOutput> getById(@PathVariable UUID id) {
         return installmentRepository
                 .findById(id)
+                .map(InstallmentOutput::toModel)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Installment create(@Valid @RequestBody Installment installment) {
-        return installmentServices.save(installment);
+    public InstallmentOutput create(@Valid @RequestBody Installment installment) {
+        return InstallmentOutput.toModel(installmentServices.save(installment));
     }
 }

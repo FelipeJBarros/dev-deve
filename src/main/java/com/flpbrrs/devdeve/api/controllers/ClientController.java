@@ -1,4 +1,4 @@
-package com.flpbrrs.devdeve.api.controller;
+package com.flpbrrs.devdeve.api.controllers;
 
 import com.flpbrrs.devdeve.domain.models.Client;
 import com.flpbrrs.devdeve.domain.repositories.ClientRepository;

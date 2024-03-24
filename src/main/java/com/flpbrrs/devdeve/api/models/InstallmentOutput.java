@@ -31,4 +31,8 @@ public class InstallmentOutput {
                 .createdAt(installment.getCreatedAt())
                 .build();
     }
+
+    public static List<InstallmentOutput> toCollectionModel(List<Installment> installments) {
+        return installments.stream().map(InstallmentOutput::toModel).toList();
+    }
 }
